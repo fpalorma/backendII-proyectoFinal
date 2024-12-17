@@ -1,12 +1,23 @@
 # Backend II - Proyecto final
 
+## Entrega final
+
+### Modificaciones:
+
+ - Se creó el elemento ticket, que contiene un id creado por Mongo, un code generado con la libreria uuid, purchase_datetime paara indicar el momento de la compra, amount para calcular la cantidad y purchaser que contiene la información del cliente que realizó la compra.
+ - Se crearon los DTO para manejar datos de productos y de usuarios evitando enviar información sensible o innecesaria al cliente.
+ - Se implementó el middleware de auth para evitar que los usuarios que no tengan el rango de administrador pudieran editar, crear o eliminar productos. Ahora solo el usuario podrá agregar productos a su carrito.
+ - Se creó una ruta especial para finalizar la compra "/purchase". Esta ruta corrobora si el producto en carrito tiene el suficiente stock en la base de datos y aprueba la compra. En el caso de que uno o más productos no tengan stock, los almacenará en un array permitiendo que el producto pueda permanecer en el carrito en el caso de que en un hipotético futuro se agreguen más stocks del producto en cuestión.
+ - Optimización de variables de entorno: unifiqué las variables de entorno en un solo archivo env.config para evitar que Node tenga que entrar al process de cada variable por separado.
+ - Utilicé el seed visto en clase para popular la base de datos con productos.
+ - Implementé patrones de diseño como Repository para separar la lógica de negocio de la lógica de los DAO. Creé controllers y servicios dejando los DAO con las funciones base del CRUD
+
 ## Pre-entrega 1
 
 Para esta pre-entrega desarrollé la lógica de un ecommerce (centrado en autorización y autenticación de usuarios). Se utilizaron tecnologías como bcrypt, JWT y Passport, entre otras.
 Para iniciar la aplicación:
 
     Clonar el repositorio
-    Crear archivo .env y completar con la info correspondiente (provista en la plataforma)
     Instalar dependencias 
     npm i
     Ejecutar la app
@@ -33,7 +44,7 @@ Este endpoint utiliza la estrategia local de passport para registrar usuario. De
     
     "email":"userTest1@test.com",
     
-    "password":"1233",
+    "password":"123",
     
     "age":30,
     
@@ -42,13 +53,22 @@ Este endpoint utiliza la estrategia local de passport para registrar usuario. De
     }
 
 **/login**
-Este endpoint utiliza la estrategia local de login configurada en Passport. Deberá proveerse el emai y la contraseña en el cuerpo de la petición. Ej:
-
+Este endpoint utiliza la estrategia local de login configurada en Passport. Deberá proveerse el email y la contraseña en el cuerpo de la petición. Ej:
+	
+    //Para el caso del usuario de rango user:
     {
     
     "email":"userTest1@test.com",
     
-    "password":"1233"
+    "password":"123"
+    
+    }
+    //Para el caso del usuario de rango admin:
+     {
+    
+    "email":"adminTest1@test.com",
+    
+    "password":"123"
     
     }
 **/logout**

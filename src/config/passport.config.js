@@ -6,6 +6,7 @@ import { userDao } from "../dao/mongo/user.dao.js";
 import { createHash, isValidPassword } from "../utils/hashPassword.js";
 import { cookieExtractor } from "../utils/cookieExtractor.js"
 import { cartDao } from "../dao/mongo/cart.dao.js";
+import envsConfig from "./envs.config.js";
 
 
 const LocalStrategy = local.Strategy;
@@ -55,8 +56,8 @@ export const initializerPassport = () => {
     //Google
 
     passport.use("google", new GoogleStrategy({
-        clientID: process.env.CLIENT_ID,
-        clientSecret: process.env.CLIENT_SECRET,
+        clientID: envsConfig.CLIENT_ID,
+        clientSecret: envsConfig.CLIENT_SECRET,
         callbackURL: "http://localhost:8080/api/sessions/google"
     },
         async (accessToken, refreshToken, profile, cb) => {
@@ -83,7 +84,7 @@ export const initializerPassport = () => {
     //JWT
     passport.use("jwt", new JWTStrategy({
         jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
-        secretOrKey: process.env.SECRET_KEY
+        secretOrKey: envsConfig.SECRET_KEY
     },
         async (jwt_payload, done) => {
             try {

@@ -3,7 +3,7 @@ import { connectDB } from "./config/mongoDB.config.js";
 import router from "./router/index.router.js";
 import { initializerPassport } from "./config/passport.config.js";
 import cookieParser from "cookie-parser"
-import "dotenv/config.js"
+import envsConfig from "./config/envs.config.js";
 
 
 
@@ -14,7 +14,7 @@ initializerPassport();
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
-app.use(cookieParser(process.env.SECRET_KEY))
+app.use(cookieParser(envsConfig.SECRET_KEY))
 
 app.use("/api", router);
 
