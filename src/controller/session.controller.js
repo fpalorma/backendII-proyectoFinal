@@ -17,8 +17,9 @@ export class SessionController {
   async login(req, res) {
     try {
       const token = createToken(req.user)
+      const user = new UserResponseDto(req.user)
       res.cookie("token", token, { httpOnly: true })
-      res.status(200).json({ status: "success", payload: req.user })
+      res.status(200).json({ status: "success", payload: user })
     } catch (error) {
       console.log(error);
       res

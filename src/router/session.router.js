@@ -4,6 +4,7 @@ import { passportCall } from "../middlewares/passport.middleware.js";
 import { authorization } from "../middlewares/authorization.middleware.js";
 import { sessionController } from "../controller/session.controller.js";
 
+
 const router = Router();
 
 router.post("/register", passportCall("register"), sessionController.register);
